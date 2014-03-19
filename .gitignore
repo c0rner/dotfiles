@@ -1,0 +1,14 @@
+# Secret stuff
+.pki/
+.ssh/
+!.ssh/config
+
+# History files
+.bash_history
+.mysql_history
+.sh_history
+.lesshst
+.viminfo
+
+.vim/
+.gitconfig

@@ -43,6 +43,11 @@ shellp() {
 ## Example session setup
 #example() {
 #   shellw ShellWindow "who"
+#   shellp $win "uname -a"
+#   shellp $win "ps"
+#   shellp $win "cal"
+#   ${TMUX} select-layout -t $win tiled
+#
 #   commw CommandWindow "top"
 #   shellp $win "ls -l"
 #   shellp $pane "id" "-h -p 30"
@@ -53,10 +58,12 @@ shellp() {
 #}
 
 # Include local file with session functions
-[ -r ${0}.local ] && . ${0}.local
+[ -r "${0}.local" ] && . "${0}.local"
 
-# Rename current session so it is capitalized
-[ "${1^}" = "${1}" ] || ${TMUX} rename-session "${1^}"
+if [ "$2" != "--no-session" ]; then
+   # Rename current session so it is capitalized
+   [ "${1^}" = "${1}" ] || ${TMUX} rename-session "${1^}"
+fi
 
 # Test if there is a function named $1 (lowercase) and execute if found
 if [ "x$(type -t "${1,,}")" = "xfunction" ]; then
