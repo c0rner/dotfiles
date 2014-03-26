@@ -1,5 +1,5 @@
 #!/bin/bash -l
-# TMUX - Session initiator; https://github.com/c0rner/dotfiles
+# TMUX - Session builder; https://github.com/c0rner/dotfiles
 #
 # Installation and setup
 # ~~~~~~~~~~~~~~~~~~~~~~
