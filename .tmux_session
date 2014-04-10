@@ -13,7 +13,6 @@
 
 # Configuration
 TMUX="/usr/bin/tmux"
-SHELL="/bin/bash"
 
 # Launch command in new window
 # Arg1: Window name
@@ -31,8 +30,10 @@ commw() {
 # Arg2: Command
 # Defines: $win for reference
 shellw() {
+   local command=$2
    commw $1
-   ${TMUX} send-keys -t "$win" "$2" C-m
+   [ -n "${command}" ] && command="${command} C-m"
+   ${TMUX} send-keys -t "$win" "$2"
 }
 
 # Launch command in new pane
@@ -54,10 +55,11 @@ commp() {
 # Defines: $pane for reference
 shellp() {
    local target=$1
-   local cmd=$2
+   local command=$2
    shift 2
    pane=$(${TMUX} split-window $@ -Pdt "${target}")
-   ${TMUX} send-keys -t "${pane}" "${cmd}" C-m
+   [ -n "${command}" ] && command="${command} C-m"
+   ${TMUX} send-keys -t "${pane}" "${command}"
 }
 
 ## Example session setup
@@ -85,14 +87,14 @@ if [ "$2" != "--no-session" ]; then
    [ "${1^}" = "${1}" ] || ${TMUX} rename-session "${1^}"
 fi
 
+# Fix window numbering by moving current window 1 way back in list.
+# This window will close when this script has finished.
+${TMUX} move-window -t 99
+
 # Test if there is a function named $1 (lowercase) and execute if found
 if [ "x$(type -t "${1,,}")" = "xfunction" ]; then
-   # Fix window numbering by moving current window 1
-   # way back in list. This window will close when
-   # setup function has finished.
-   ${TMUX} move-window -t 99
    ${1,,}
 else
    # Fall back if no defined function found
-   exec ${SHELL}
+   ${TMUX} new-window
 fi
