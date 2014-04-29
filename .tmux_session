@@ -21,7 +21,7 @@ TMUX="/usr/bin/tmux"
 commw() {
    win=$(${TMUX} neww -Pd -n "$1" "$2")
 
-   # Fix bug where window_index is returned as a "float" (seen in 1.8)
+   # Fix instance where window_index is returned with pane-id (seen in 1.8)
    win=${win%.*}
 }
 
