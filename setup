@@ -1,0 +1,47 @@
+#!/bin/sh
+
+is_linked() {
+   local source="$(readlink -f $1)"
+   local target="$(readlink -f $2)"
+
+   if [ "${source}" != "${target}" ]; then
+      return 1
+   fi
+}
+
+link_file() {
+   [ -z "$2" ] && return
+   [ -d "$2" ] && return
+   [ "$2" = "${Basename}" ] && return
+
+   local source="$1/$2"
+   local target="${HOME}/$2"
+
+   if [ -L "${target}" ]; then
+      if is_linked "$source" "$target"; then
+         # Target already linked, do nothing
+         return
+      fi
+         # Target linked some where else
+         echo "  ${target} - Linked to '$(readlink ${target})', skipping!"
+         return
+   fi
+
+   if [ -f "${target}" ]; then
+      # Target file already exists
+      echo "  ${target} - Is a file, skipping!"
+      return
+   fi
+
+   echo "  ${source} -> ${HOME}"
+   ln -s "${source}" "${HOME}"
+}
+
+Basename=$(basename "$0")
+Basedir=$(dirname "$0")
+Dotfiles=$(ls -a ${Basedir})
+
+echo "Setting up symlinks.."
+for Dotfile in ${Dotfiles}; do
+   link_file "${Basedir}" "${Dotfile}"
+done
