@@ -26,6 +26,8 @@ link_file() {
    local target=$1/$3
    local source=$2/$3
 
+   [ ${Init} -eq 1 ] && rm -f "${target}"
+
    if [ -L "${target}" ]; then
       if is_same_file "${source}" "${target}"; then
          # Target already linked, do nothing
@@ -52,7 +54,7 @@ list_dir() {
 
 setup_dotfiles() {
    echo "Setting up links in ~/"
-   Files=$(list_dir ${Dotdir})
+   Files=$(list_dir ${Basedir})
    for File in ${Files}; do
       [ "${File}" = "${Basename}" ] && continue
       link_file "${HOME}" "${Basedir}" "${File}"
@@ -60,7 +62,7 @@ setup_dotfiles() {
 }
 
 setup_subdir() {
-   local subdir="${Dotdir}/$1"
+   local subdir="${Basedir}/$1"
 
    [ -d "${subdir}" ] || return 1
 
@@ -73,7 +75,9 @@ setup_subdir() {
 
 Basename=$(basename "$0")
 Basedir=$(dirname "$0")
-Dotdir="${Basedir}"
+Init=0
+
+[ "$1" = "--init" ] && Init=1
 
 setup_dotfiles
 setup_subdir bin
