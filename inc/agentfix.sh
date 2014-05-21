@@ -30,7 +30,7 @@ if [ -z "${SSH_AUTH_SOCK}" ]; then
             SSH_AUTH_SOCK=$(readlink -f "${dir}/agent"*)
             if [ -S "${SSH_AUTH_SOCK}" ]; then
                ssh-add 2>/dev/null
-               [ $? -lt 2] && break
+               [ $? -lt 2 ] && break
             fi
             unset SSH_AUTH_SOCK
          fi
