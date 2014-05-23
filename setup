@@ -62,14 +62,21 @@ setup_dotfiles() {
 }
 
 setup_subdir() {
-   local subdir="${Basedir}/$1"
+   while [ -n "$1" ]; do
+      local subdirtarget="${HOME}/$1"
+      local subdirsource="${Basedir}/$1"
+      shift
 
-   [ -d "${subdir}" ] || return 1
+      [ -d "${subdirsource}" ] || continue
+      if [ ! -d "${subdirtarget}" ]; then
+         mkdir -p "${subdirtarget}"
+      fi
 
-   echo "Setting up links in ~/${subdir}"
-   Files=$(list_dir ${subdir})
-   for File in ${Files}; do
-      link_file "${HOME}/bin" "../${subdir}" "${File}"
+      echo "Setting up links in ~/${subdirtarget}"
+      Files=$(list_dir ${subdirsource})
+      for File in ${Files}; do
+         link_file "${subdirtarget}" "../${subdirsource}" "${File}"
+      done
    done
 }
 
