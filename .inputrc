@@ -1,0 +1,22 @@
+###
+### Options
+###
+#
+# Use Emacs style editing
+set editing-mode emacs
+
+# Show completions on first TAB press
+set show-all-if-ambiguous on
+
+# Ignore case on completions
+set completion-ignore-case on
+
+# Completing from within a word
+set skip-completed-text on
+
+###
+### Binds
+###
+
+# Quick insertion of flags
+"\e-": "\C-a\ef -"
