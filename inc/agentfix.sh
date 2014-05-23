@@ -18,6 +18,7 @@ if [ -n "${SSH_AUTH_SOCK}" ]; then
       fi
    fi
 fi
+export SSH_AUTH_SOCK
 
 # SSH_AUTH_SOCK not set, try finding a socket
 if [ -z "${SSH_AUTH_SOCK}" ]; then
