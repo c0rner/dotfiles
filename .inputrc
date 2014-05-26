@@ -20,3 +20,6 @@ set skip-completed-text on
 
 # Quick insertion of flags
 "\e-": "\C-a\ef -"
+
+# Quick 'sudo' 
+"\es": "\C-asudo \C-e"
