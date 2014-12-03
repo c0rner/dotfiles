@@ -1,4 +1,5 @@
 [ -n $BASH_VERSINFO -a $BASH_VERSINFO -eq 4 ] || { echo "error: need BASH v4" >&2; return; }
+[ $TERM == "dumb" ] && return
 
 # TermInfo feature detection (Borrowed from LiquidPrompt)
 if tput setaf >/dev/null 2>&1 ; then

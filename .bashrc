@@ -4,11 +4,10 @@ if [ -f /etc/bashrc ]; then
 fi
 
 # Fix ssh auth sock
-alias agentfix='. ~/dotfiles/inc/agentfix.sh'
-agentfix
+alias agentfix='. ~/inc/agentfix.sh'
 
 # Source color macros
-. ~/dotfiles/inc/colors.sh
+. ~/inc/colors.sh
 
 fixPrompt() {
   printf "\033k%s@%s:%s\033\\" "${USER}" "${HOSTNAME%%.*}" "${PWD/#$HOME/~}"
@@ -23,3 +22,14 @@ export PROMPT_DIRTRIM PS1
 
 # Make sure all host-keys are hashed
 ssh-keygen -H 2>/dev/null
+
+# Docker aliases / functions
+alias docker-id="docker inspect --format '{{ .Id }}'"
+alias docker-ip="docker inspect --format '{{ .NetworkSettings.IPAddress }}'"
+alias docker-pid="docker inspect --format '{{ .State.Pid }}'"
+docker-shell () 
+{ 
+   cd /var/lib/docker/execdriver/native/$(docker-id "$1")
+   nsinit exec bash
+   cd -
+}
