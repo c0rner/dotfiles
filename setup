@@ -4,12 +4,18 @@ error() {
    echo "error: $*" >&2
 }
 
+canonicalize() {
+   local dir=$(dirname $1)
+   local file=$(basename $1)
+   (cd "${dir}" && echo "$(pwd -P)/${file}")
+}
+
 is_same_file() {
-   local source="$(readlink -f $1)"
-   local target="$(readlink -f $2)"
+   local source="$(canonicalize $1)"
+   local target="$(canonicalize $2)"
 
    # Check if it is a relatve link
-   [ -z "${source}" ] && source="$(readlink -f $(dirname $2)/$1)"
+   [ -z "${source}" ] && source="$(canonicalize $(dirname $2)/$1)"
 
    # Return with an error if source or target is invalid
    [ -z "${source}" -o -z "${target}" ] && return 1
@@ -49,7 +55,10 @@ link_file() {
 }
 
 list_dir() {
-   find "$1" -maxdepth 1 -type f -printf "%f\n"
+   local path
+   find "$1" -maxdepth 1 -type f | while read path; do
+      basename ${path}
+   done
 }
 
 setup_dotfiles() {
