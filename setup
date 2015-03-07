@@ -4,10 +4,37 @@ error() {
    echo "error: $*" >&2
 }
 
+# canonicalize resolves the real path of $1
 canonicalize() {
-   local dir=$(dirname $1)
-   local file=$(basename $1)
-   (cd "${dir}" && echo "$(pwd -P)/${file}")
+   local link=$(readlink -- $1)
+   local dir=$(dirname -- $1)
+
+   # canonicalize directory path
+   if [ ! -d "${dir}" ]; then
+      return
+   fi
+   local cdir=$(cd "${dir}" && echo "$(pwd -P)")
+
+   # are we in a loop?
+   if [ "$1" == "${cdir}/${link}" ]; then
+      return
+   fi
+
+   # canonicalize full path to file
+   if [ -n "${link}" ]; then
+      case "${link}" in
+       /*) canonicalize "${link}" ;;
+        *) canonicalize "${cdir}/${link}" ;;
+      esac
+      return
+   fi
+   if [ "${dir}" != "${cdir}" ]; then
+      canonicalize "${cdir}/$(basename -- $1)"
+      return
+   fi
+
+   # finally echo canonicalized path to stdout
+   echo "$1"
 }
 
 is_same_file() {
@@ -97,3 +124,4 @@ Init=0
 
 setup_dotfiles
 setup_subdir bin
+setup_subdir inc
