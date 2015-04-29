@@ -4,10 +4,10 @@ if [ -f /etc/bashrc ]; then
 fi
 
 # Fix ssh auth sock
-alias agentfix='. ~/inc/agentfix.sh'
+alias agentfix='. ~/dotfiles/inc/agentfix.sh'
 
 # Source color macros
-. ~/inc/colors.sh
+. ~/dotfiles/inc/colors.sh
 
 fixPrompt() {
   printf "\033k%s@%s:%s\033\\" "${USER}" "${HOSTNAME%%.*}" "${PWD/#$HOME/~}"
@@ -15,9 +15,9 @@ fixPrompt() {
 }
 
 # Set up prompt
-PROMPT_COMMAND='fixPrompt'
+PROMPT_COMMAND=""
 PROMPT_DIRTRIM=4
-PS1="${HYAC["BLUE"]}\342\224\214\342\224\200[${HYAC["RED"]}\${USERCOLOR}\u@\h${HYAC["BLUE"]}]${HYAC["RESET"]} \w\n\\$ "
+PS1="${HYAC["BLUE"]}\342\224\214\342\224\200[${HYAC["RED"]}${USERCOLOR}\u@\h${HYAC["BLUE"]}]${HYAC["RESET"]} \w\n\\$ "
 export PROMPT_DIRTRIM PS1
 
 # Make sure all host-keys are hashed

@@ -3,8 +3,7 @@ if len($GOROOT)
     filetype off
     filetype plugin indent off
   endif
-
-  set runtimepath+=$GOROOT/misc/vim
+  set runtimepath+=$HOME/.vim/bundle/vim-go
   filetype plugin indent on
   syntax on
 endif
