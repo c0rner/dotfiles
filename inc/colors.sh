@@ -1,4 +1,3 @@
-[ -n $BASH_VERSINFO -a $BASH_VERSINFO -eq 4 ] || { echo "error: need BASH v4" >&2; return; }
 [ $TERM == "dumb" ] && return
 
 # TermInfo feature detection (Borrowed from LiquidPrompt)
@@ -15,7 +14,7 @@ else
    ti_setaf () { : ; }
 fi
 
-declare -A HYAC
+declare -a HYAC
 HYAC["BOLD"]="$( { tput bold || tput md ; } 2>/dev/null )"
 HYAC["BLACK"]="$(ti_setaf 0)"
 HYAC["RED"]="$(ti_setaf 1)"
