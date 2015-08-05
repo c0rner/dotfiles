@@ -23,3 +23,6 @@ set skip-completed-text on
 
 # Quick 'sudo' last command
 "\es": "\C-p\C-asudo \C-e"
+
+# Reverse search
+"\e[A": history-search-backward
