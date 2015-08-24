@@ -1,0 +1,10 @@
+#!/bin/sh
+[ -d /proc ] || { echo "error: missing '/proc' mount"; exit 1; }
+
+LoginUID="/proc/$1/loginuid"
+if [ -r ${LoginUID} ]; then
+  uid=$(cat ${LoginUID})
+fi
+
+user=$(getent passwd ${uid}|sed 's/:.*//')
+echo $user
