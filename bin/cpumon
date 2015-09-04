@@ -16,8 +16,8 @@ percentage() {
 }
 
 graph() {
-	local -i val=$(($1 / 12))
-	set ▁ ▂ ▃ ▄ ▅ ▆ ▇ █ █
+	local -i val=$(($1 / 13))
+	set ▁ ▂ ▃ ▄ ▅ ▆ ▇ █
 	while [ $val -gt 0 ]; do shift; val=$((val - 1)); done
 	echo -n "$1"
 }
@@ -27,11 +27,16 @@ cpustat() {
 	echo ${REPLY}
 }
 
+getcols() {
+	cols=$(tput cols)
+	echo $((cols - 30))
+}
+
+typeset -i Cols=$(getcols)
 typeset -i Total
 typeset -i Ototal
 typeset -i Idle
 typeset -i Oidle
-typeset -i Cols=50
 typeset -i Width
 
 while true; do
@@ -46,6 +51,7 @@ while true; do
 	if [ ${Width} -ge ${Cols} ]; then
 		echo " $(date)"
 		Width=0
+		Cols=$(getcols)
 	fi
 	sleep ${Interval}
 done
