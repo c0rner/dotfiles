@@ -1,10 +1,17 @@
 #!/bin/sh
-[ -d /proc ] || { echo "error: missing '/proc' mount"; exit 1; }
 
-LoginUID="/proc/$1/loginuid"
-if [ -r ${LoginUID} ]; then
-  uid=$(cat ${LoginUID})
+loginuid() {
+  local path="/proc/$1/loginuid"
+  if [ -r "${path}" ]; then
+    read < "${path}"
+    echo "${REPLY}"
+  fi
+}
+
+initid=$(loginuid 1)
+uid=$(loginuid ${1:-$$})
+if [ ${uid} -eq ${initid} ]; then
+  echo "init"
+else
+  echo $(getent passwd ${uid}|sed 's/:.*//')
 fi
-
-user=$(getent passwd ${uid}|sed 's/:.*//')
-echo $user
