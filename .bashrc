@@ -33,3 +33,6 @@ docker-shell ()
    nsinit exec bash
    cd -
 }
+
+# Fix history settings
+HISTCONTROL="ignoreboth"
