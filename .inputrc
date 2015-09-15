@@ -29,3 +29,4 @@ set skip-completed-text on
 
 # Reverse search
 "\e[A": history-search-backward
+"\e[B": history-search-forward
