@@ -8,6 +8,7 @@ alias agentfix='. ~/dotfiles/inc/agentfix.sh'
 
 # Source color macros
 . ~/dotfiles/inc/colors.sh
+. ~/dotfiles/inc/git-prompt.sh
 
 fixPrompt() {
   printf "\033k%s@%s:%s\033\\" "${USER}" "${HOSTNAME%%.*}" "${PWD/#$HOME/~}"
@@ -17,7 +18,7 @@ fixPrompt() {
 # Set up prompt
 PROMPT_COMMAND=""
 PROMPT_DIRTRIM=4
-PS1="${HYAC["BLUE"]}\342\224\214\342\224\200[${HYAC["RED"]}${USERCOLOR}\u@\h${HYAC["BLUE"]}]${HYAC["RESET"]} \w\n\\$ "
+PS1='${HYAC["BLUE"]}\342\224\214\342\224\200[${HYAC["RED"]}${USERCOLOR}\u@\h${HYAC["BLUE"]}]${HYAC["RESET"]} \w\n$(__git_ps1 "(%s)")\$ '
 export PROMPT_DIRTRIM PS1
 
 # Make sure all host-keys are hashed
@@ -36,3 +37,9 @@ docker-shell ()
 
 # Fix history settings
 HISTCONTROL="ignoreboth"
+
+# GIT aliases
+alias gs="git status"
+
+#
+GIT_ACCESS_TOKEN="6fcecc57d56a68f5acbc56b1fb1b33c01cae87aa"
