@@ -40,6 +40,3 @@ HISTCONTROL="ignoreboth"
 
 # GIT aliases
 alias gs="git status"
-
-#
-GIT_ACCESS_TOKEN="6fcecc57d56a68f5acbc56b1fb1b33c01cae87aa"
