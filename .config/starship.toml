@@ -1,0 +1,18 @@
+[character]
+success_symbol = '🌻'
+error_symbol = '❌'
+#success_symbol = '[\$](bold green)'
+#error_symbol = '[\$](bold red)'
+
+[directory]
+style = 'fg:75'
+
+[git_branch]
+symbol = '🌵'
+style = 'fg:208'
+
+[git_status]
+style = 'fg:40'
+
+[rust]
+disabled = true
