@@ -41,3 +41,8 @@ _maybe_alias vim nvim.appimage nvim
 if [ -e "$(type -p starship)" ]; then
   eval "$(starship init bash)"
 fi
+
+# Source local overrides
+if [ -f "$HOME/.local/bashrc" ]; then
+	. "$HOME/.local/bashrc"
+fi
