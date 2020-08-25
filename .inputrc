@@ -8,6 +8,10 @@ set editing-mode emacs
 # Show completions on first TAB press
 set show-all-if-ambiguous on
 
+# Colored completions + prefix
+set colored-completion-prefix on
+set colored-stats on
+
 # Ignore case on completions
 set completion-ignore-case on
 
@@ -30,3 +34,5 @@ set skip-completed-text on
 # Reverse search
 "\e[A": history-search-backward
 "\e[B": history-search-forward
+"\e[1;5A": history-substring-search-backward
+"\e[1;5B": history-substring-search-forward
