@@ -70,13 +70,13 @@ set noshowmode
 set splitright
 
 " Resize horizontal split
-tnoremap <M-C-Up> <C-w>+
-tnoremap <M-C-Down> <C-w>-
+tnoremap <M-C-Up> <C-\><C-n><C-w>+
+tnoremap <M-C-Down> <C-\><C-n><C-w>-
 noremap <M-C-Up> <C-w>+
 noremap <M-C-Down> <C-w>-
 " Resize vertical split
-tnoremap <M-C-Right> 2<C-w>>
-tnoremap <M-C-Left> 2<C-w><
+tnoremap <M-C-Right> <C-\><C-n>2<C-w>>
+tnoremap <M-C-Left> <C-\><C-n>2<C-w><
 noremap <M-C-Right> 2<C-w>>
 noremap <M-C-Left> 2<C-w><
 " Exit terminal mode using double <Esc>
