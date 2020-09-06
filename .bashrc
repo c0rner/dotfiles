@@ -36,13 +36,11 @@ _maybe_alias() {
 
 # Setup NeoVim alias for Vim
 _maybe_alias vim nvim.appimage nvim
+if [ -n $NVIM_LISTEN_ADDRESS ]; then
+  alias vim="nvhoist ${BASH_ALIASES[vim]}"
+fi
 
 # Setup Starship prompt
 if [ -e "$(type -p starship)" ]; then
   eval "$(starship init bash)"
-fi
-
-# Source local overrides
-if [ -f "$HOME/.local/bashrc" ]; then
-	. "$HOME/.local/bashrc"
 fi
