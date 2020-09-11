@@ -37,7 +37,7 @@ _maybe_alias() {
 # Setup NeoVim alias for Vim
 _maybe_alias vim nvim.appimage nvim
 if [ -n $NVIM_LISTEN_ADDRESS ]; then
-  alias vim="nvhoist ${BASH_ALIASES[vim]}"
+  alias vim="nvhoist"
 fi
 
 # Setup Starship prompt

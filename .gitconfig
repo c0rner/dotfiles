@@ -1,0 +1,10 @@
+[include]
+	path = .local/.gitconfig
+
+[alias]
+	br = branch
+	co = checkout
+	d = diff
+	fix = commit --amend 
+	lo = log -10 --oneline
+	s = status
