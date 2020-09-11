@@ -95,6 +95,9 @@ nnoremap <silent> <C-Right> <C-w>l:call IfTerminalDoInsert()<CR>
 set number
 set rnu
 
+" No numbers in terminal buffer
+autocmd TermOpen * setlocal nonumber 
+
 let mapleader = ","
 if executable('rls')
   lua require'nvim_lsp'.rls.setup{}
