@@ -11,5 +11,6 @@
 
 # PII
 .gitconfig
+.local/
 
 .vim/

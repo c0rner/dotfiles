@@ -5,6 +5,6 @@
 	br = branch
 	co = checkout
 	d = diff
-	fix = commit --amend 
+	fix = commit --amend --no-edit
 	lo = log -10 --oneline
 	s = status
