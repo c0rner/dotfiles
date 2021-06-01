@@ -34,7 +34,7 @@ Plug 'rust-lang/rust.vim'
 "Plug 'plasticboy/vim-markdown'
 
 " Language Server
-Plug 'neovim/nvim-lsp'
+Plug 'neovim/nvim-lspconfig'
 
 call plug#end()
 
@@ -100,8 +100,8 @@ autocmd TermOpen * setlocal nonumber
 
 let mapleader = ","
 if executable('rls')
-  lua require'nvim_lsp'.rls.setup{}
-  "lua require'nvim_lsp'.rust_analyzer.setup{}
+  lua require'lspconfig'.rls.setup{}
+  "lua require'lspconfig'.rust_analyzer.setup{}
 
   nnoremap <silent> gd    <cmd>lua vim.lsp.buf.definition()<CR>
   nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
