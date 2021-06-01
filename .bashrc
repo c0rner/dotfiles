@@ -15,9 +15,8 @@ export PATH
 HISTCONTROL="ignoreboth"
 HISTIGNORE="ls:[bf]g:exit:pwd:clear"
 
-# _maybe_alias() <alias> <target> [...]
-# Evaluate target commands by searching path for executable file.
-# If found found create alias mapping to matching target.
+# _maybe_alias() <alias> <target> [target] [...]
+# Evaluate list of target commands and alias the first match
 #
 # Args:
 # alias = Name of alias
@@ -44,3 +43,6 @@ fi
 if [ -e "$(type -p starship)" ]; then
   eval "$(starship init bash)"
 fi
+
+# Aliases
+alias dotfiles='git --git-dir=$HOME/.local/dotfiles.git/ --work-tree=$HOME'
