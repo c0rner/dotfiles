@@ -8,8 +8,10 @@
 .dbshell
 .lesshst
 .viminfo
+.wget-hsts
 
 # PII
+.cache
 .gitconfig
 .local/
 

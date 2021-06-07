@@ -34,7 +34,9 @@ Plug 'rust-lang/rust.vim'
 "Plug 'plasticboy/vim-markdown'
 
 " Language Server
-Plug 'neovim/nvim-lsp'
+Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-lua/completion-nvim'
+Plug 'nvim-lua/lsp_extensions.nvim'
 
 call plug#end()
 
@@ -51,12 +53,6 @@ let g:netrw_altv = 1
 " =============================================================================
 " # 
 " =============================================================================
-function! FixIceberg() abort
-  hi normal ctermbg=0
-  hi link LspDiagnosticsError ErrorMsg
-  hi LspDiagnosticsWarning ctermfg=242 ctermbg=233
-endfunction
-
 function! IfTerminalDoInsert()
   if &buftype ==# 'terminal'
     :startinsert!
@@ -99,9 +95,37 @@ set rnu
 autocmd TermOpen * setlocal nonumber 
 
 let mapleader = ","
-if executable('rls')
-  lua require'nvim_lsp'.rls.setup{}
-  "lua require'nvim_lsp'.rust_analyzer.setup{}
+if executable('rust-analyzer')
+lua << EOF
+local nvim_lsp = require'lspconfig'
+
+local on_attach = function(client)
+    require'completion'.on_attach(client)
+end
+
+nvim_lsp.rust_analyzer.setup({
+    on_attach=on_attach,
+    settings = {
+        ["rust-analyzer"] = {
+            assist = {
+                importGranularity = "crate",
+                importPrefix = "by_self",
+            },
+            cargo = {
+                loadOutDirsFromCheck = true
+            },
+            procMacro = {
+                enable = true
+            },
+        }
+    }
+})
+EOF
+  "autocmd CursorHold,CursorHoldI *.rs :lua require'lsp_extensions'.inlay_hints{ only_current_line = true }
+  " Enable type inlay hints
+  autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost *
+	\ lua require'lsp_extensions'.inlay_hints{ prefix = '', highlight = "Comment", enabled = {"TypeHint", "ChainingHint", "ParameterHint"} }
+
 
   nnoremap <silent> gd    <cmd>lua vim.lsp.buf.definition()<CR>
   nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
@@ -114,6 +138,7 @@ if executable('rls')
   nnoremap <silent> <leader>s <cmd>vsplit +terminal<CR>i
   inoremap <silent> <leader>, <c-x><c-o>
 
+  set completeopt=menuone,noinsert,noselect
   " Use LSP omni-completion in Rust files.
   autocmd Filetype rust setlocal omnifunc=v:lua.vim.lsp.omnifunc
 
@@ -121,8 +146,4 @@ if executable('rls')
   autocmd BufWritePre *.rs lua vim.lsp.buf.formatting_sync(nil, 1000)
 endif
 
-augroup IcebergColors
-    autocmd!
-    autocmd ColorScheme iceberg call FixIceberg()
-augroup END
 colorscheme nature
