@@ -66,15 +66,21 @@ set noshowmode
 set splitright
 
 " Resize horizontal split
-tnoremap <M-C-Up> <C-\><C-n><C-w>+
-tnoremap <M-C-Down> <C-\><C-n><C-w>-
-noremap <M-C-Up> <C-w>+
-noremap <M-C-Down> <C-w>-
+tnoremap <S-C-Up> <C-\><C-n><C-w>+
+tnoremap <S-C-Down> <C-\><C-n><C-w>-
+noremap <S-C-Up> <C-w>+
+noremap <S-C-Down> <C-w>-
 " Resize vertical split
-tnoremap <M-C-Right> <C-\><C-n>2<C-w>>
-tnoremap <M-C-Left> <C-\><C-n>2<C-w><
-noremap <M-C-Right> 2<C-w>>
-noremap <M-C-Left> 2<C-w><
+tnoremap <S-C-Right> <C-\><C-n>2<C-w>>
+tnoremap <S-C-Left> <C-\><C-n>2<C-w><
+noremap <S-C-Right> 2<C-w>>
+noremap <S-C-Left> 2<C-w><
+" Switch tab windows
+tnoremap <M-C-Right> <C-\><C-n>:tabn<CR>:call IfTerminalDoInsert()<CR>
+tnoremap <M-C-Left> <C-\><C-n>:tabp<CR>:call IfTerminalDoInsert()<CR>
+noremap <M-C-Right> <cmd>tabn<CR>:call IfTerminalDoInsert()<CR>
+noremap <M-C-Left> <cmd>tabp<CR>:call IfTerminalDoInsert()<CR>
+
 " Exit terminal mode using double <Esc>
 tnoremap <Esc><Esc> <C-\><C-n>
 " Switch windows and start insert if buffer is a terminal
